@@ -48,6 +48,29 @@ i$obs.label[$x] $getVar('current.' + $x)	fake	(null)	0
 #end if
 #end if
 #end for
+i	fake	(null)	0
+iDaily Statistics	fake	(null)	0
+i	fake	(null)	0
+#for $x in $observations_stats
+#if getattr($recent, $x).has_data
+#if $x == 'windSpeed'
+i$gettext("Max Wind")	fake	(null)	0
+i$day.wind.max	fake	(null)	0
+i$day.wind.gustdir	fake	(null)	0
+i$gettext("Average Wind") $day.wind.avg	fake	(null)	0
+i$gettext("RMS Wind") $day.wind.rms	fake	(null)	0
+i$gettext("Vector Average") $day.wind.vecavg	fake	(null)	0
+i$gettext("Vector Direction") $day.wind.vecdir	fake	(null)	0
+#elif $x in $obs_type_sum
+i$obs.label[$x] $getVar('day.' + $x).sum	fake	(null)	0
+#elif $x in $obs_type_max
+i$obs.label[$x] $getVar('day.' + $x).max	fake  (null)	0
+#else
+i$obs.label[$x] Max $getVar('day.' + $x).max Min $getVar('day.' + $x).min	fake  (null)	0
+#end if
+#end if
+#end for
+i	fake	(null)	0
 0Week	/week
 0Month	/month
 0Year	/year
