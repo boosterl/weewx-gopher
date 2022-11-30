@@ -23,6 +23,7 @@ class GopherInstaller(ExtensionInstaller):
                      'skins/gopher/week.tmpl',
                      'skins/gopher/month.tmpl',
                      'skins/gopher/year.tmpl',
+                     'skins/gopher/about.tmpl',
                      'skins/gopher/skin.conf'])
                    ]
             )
