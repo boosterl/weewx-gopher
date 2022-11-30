@@ -21,6 +21,8 @@ class GopherInstaller(ExtensionInstaller):
             files=[('skins/gopher',
                     ['skins/gopher/gophermap.tmpl',
                      'skins/gopher/week.tmpl',
+                     'skins/gopher/month.tmpl',
+                     'skins/gopher/year.tmpl',
                      'skins/gopher/skin.conf'])
                    ]
             )
