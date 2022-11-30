@@ -1,0 +1,26 @@
+#set $observations_stats = $to_list($DisplayOptions.get('observations_stats', ['outTemp', 'windSpeed', 'rain']))
+#set $obs_type_sum = $to_list($DisplayOptions.get('obs_type_sum', ['rain']))
+#set $obs_type_max = $to_list($DisplayOptions.get('obs_type_max', ['rainRate']))
+## use this span to determine whether there are any data to consider.
+#set $recent=$span($day_delta=30, boundary='midnight')
+Weekly Statistics
+
+#for $x in $observations_stats
+#if getattr($recent, $x).has_data
+#if $x == 'windSpeed'
+$gettext("Max Wind")
+$week.wind.max
+$week.wind.gustdir
+$gettext("Average Wind") $week.wind.avg
+$gettext("RMS Wind") $week.wind.rms
+$gettext("Vector Average") $week.wind.vecavg
+$gettext("Vector Direction") $week.wind.vecdir
+#elif $x in $obs_type_sum
+$obs.label[$x] $getVar('week.' + $x).sum
+#elif $x in $obs_type_max
+$obs.label[$x] $getVar('week.' + $x).max
+#else
+$obs.label[$x] Max $getVar('week.' + $x).max Min $getVar('week.' + $x).min
+#end if
+#end if
+#end for

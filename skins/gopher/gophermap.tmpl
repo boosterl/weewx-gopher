@@ -1,0 +1,53 @@
+i__          __    __          ____   __	fake	(null)	0 
+i\ \        / /    \ \        / /\ \ / /	fake	(null)	0 
+i \ \  /\  / /__  __\ \  /\  / /  \ V /	fake	(null)	0
+i  \ \/  \/ / _ \/ _ \ \/  \/ /    > <	fake	(null)	0 
+i   \  /\  /  __/  __/\  /\  /    / . \	fake	(null)	0
+i  __\/_ \/ \___|\___| \/  \/    /_/ \_\	fake	(null)	0 
+i / ____|           | |	fake	(null)	0 
+i| |  __  ___  _ __ | |__   ___ _ __	fake	(null)	0 
+i| | |_ |/ _ \| '_ \| '_ \ / _ \ '__|	fake	(null)	0 
+i| |__| | (_) | |_) | | | |  __/ |	fake	(null)	0 
+i \_____|\___/| .__/|_| |_|\___|_|	fake	(null)	0 
+i             | |	fake	(null)	0 
+i             |_|	fake	(null)	0 
+i	fake	(null)	0
+i$station.location	fake	(null)	0
+i$current.dateTime	fake	(null)	0
+
+#set $observations_current = $to_list($DisplayOptions.get('observations_current', ['outTemp', 'barometer']))
+#set $observations_stats = $to_list($DisplayOptions.get('observations_stats', ['outTemp', 'windSpeed', 'rain']))
+#set $obs_type_sum = $to_list($DisplayOptions.get('obs_type_sum', ['rain']))
+#set $obs_type_max = $to_list($DisplayOptions.get('obs_type_max', ['rainRate']))
+## use this span to determine whether there are any data to consider.
+#set $recent=$span($day_delta=30, boundary='midnight')
+iCurrent Conditions	fake	(null)	0
+
+#for $x in $observations_current
+#if $getVar('year.%s.has_data' % $x)
+#if $x == 'barometer'
+i$obs.label.barometer $current.barometer ($trend.barometer.formatted)	fake	(null)	0
+#elif $x == 'windSpeed'
+i$obs.label.wind $current.windSpeed $current.windDir.ordinal_compass ($current.windDir)	fake	(null)	0
+#elif $x == 'rain'
+i$gettext("Rain Today") $day.rain.sum	fake	(null)	0
+#elif $x == 'UV'
+#if $current.UV.raw <= 2.4
+i$obs.label.UV $current.UV	fake	(null)	0
+#else if $current.UV.raw >= 2.5 and $current.UV.raw <= 5.4
+i$obs.label.UV $current.UV	fake	(null)	0
+#else if $current.UV.raw >= 5.5 and $current.UV.raw <= 7.4
+i$obs.label.UV $current.UV	fake	(null)	0
+#else if $current.UV.raw >= 7.5 and $current.UV.raw <= 10.4
+i$obs.label.UV $current.UV	fake	(null)	0
+#else if $current.UV.raw > 10.5
+i$obs.label.UV $current.UV	fake	(null)	0
+#end if
+#else
+i$obs.label[$x] $getVar('current.' + $x)	fake	(null)	0
+#end if
+#end if
+#end for
+0Week	/week
+
+.
